@@ -1,0 +1,172 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>MBTI Detective AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf7ff;--solid:#fff;--card:rgba(255,255,255,.72);--ink:#2a2540;--mut:#6a6385;--line:rgba(130,110,190,.18);--a:#8b7cf6;--b:#f58fc2;--c:#6fd3bd;--g:linear-gradient(120deg,#8b7cf6,#f58fc2);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171428;--solid:#231f3a;--card:rgba(40,35,66,.72);--ink:#f1edff;--mut:#b2abd0;--line:rgba(180,165,255,.2)}}
+:root[data-theme="dark"]{--bg:#171428;--solid:#231f3a;--card:rgba(40,35,66,.72);--ink:#f1edff;--mut:#b2abd0;--line:rgba(180,165,255,.2)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Plus Jakarta Sans',system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(38rem 28rem at 8% -5%,rgba(139,124,246,.3),transparent),radial-gradient(32rem 26rem at 100% 8%,rgba(245,143,194,.26),transparent),radial-gradient(30rem 24rem at 55% 105%,rgba(111,211,189,.26),transparent)}
+h1,h2,h3,.big{font-family:Fraunces,Georgia,serif;line-height:1.15;margin:0 0 .5rem}h1{font-size:clamp(2.2rem,6vw,3.7rem)}h2{font-size:clamp(1.5rem,3.5vw,2.1rem)}h3{font-size:1.15rem}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:.3rem;padding:.6rem 1rem;backdrop-filter:blur(14px);background:var(--card);border-bottom:1px solid var(--line)}
+.brand{margin-right:auto;background:none;border:0;color:inherit;font:700 1.15rem Fraunces,Georgia,serif;cursor:pointer}
+.lnk,.ghost{background:none;border:1px solid transparent;color:var(--ink);padding:.45rem .8rem;border-radius:99px;font:inherit;font-weight:600;cursor:pointer}.lnk:hover,.ghost:hover,.lnk[aria-current]{background:var(--line)}.ghost{border-color:var(--line)}
+.btn{background:var(--g);color:#fff;border:0;border-radius:99px;padding:.85rem 1.6rem;font:inherit;font-weight:700;cursor:pointer;box-shadow:0 10px 24px rgba(139,124,246,.35);transition:transform .2s}.btn:hover{transform:translateY(-2px)}.btn:disabled,.ghost:disabled{opacity:.45;cursor:not-allowed;transform:none}
+:focus-visible{outline:3px solid var(--a);outline-offset:2px}
+main{max-width:1080px;margin:0 auto;padding:1.2rem 1rem 2rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:1.3rem;box-shadow:0 10px 30px rgba(120,100,200,.12);backdrop-filter:blur(8px)}
+.view{animation:rise .5s ease both}@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:2rem;align-items:center;padding:2rem 0}
+.gt{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:1.1rem;color:var(--mut);max-width:34rem}small{color:var(--mut)}
+.pill{display:inline-block;padding:.3rem .8rem;border-radius:99px;background:var(--card);border:1px solid var(--line);font-size:.85rem;font-weight:600;margin-bottom:1rem}
+.row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}
+.art{position:relative;max-width:360px;margin:auto}.art svg{width:100%;animation:fl 6s ease-in-out infinite}.fl{position:absolute;font-size:1.7rem;animation:fl 5s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-12px)}}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}.sec{margin:2.4rem 0 1rem}
+.step b{font:700 2.2rem Fraunces,Georgia,serif}
+.quiz{max-width:680px;margin:1rem auto}.prog{display:flex;flex-direction:column;gap:.4rem;font-weight:600;color:var(--mut);margin-bottom:1.2rem}
+.bar{height:10px;border-radius:9px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;width:var(--w);background:var(--g);border-radius:9px;animation:grow 1s ease both}@keyframes grow{from{width:0}}
+.opt{display:block;width:100%;text-align:left;margin:.6rem 0;padding:1rem 1.1rem;border-radius:18px;border:2px solid var(--line);background:var(--solid);color:var(--ink);font:inherit;cursor:pointer;transition:.2s}.opt:hover{border-color:var(--a);transform:translateX(4px)}.opt.on{border-color:var(--a);background:linear-gradient(120deg,rgba(139,124,246,.2),rgba(245,143,194,.2))}
+textarea{width:100%;min-height:76px;border-radius:16px;border:2px solid var(--line);background:var(--solid);color:var(--ink);padding:.8rem;font:inherit;resize:vertical}.or{margin:1rem 0 .3rem}
+.nav2{display:flex;justify-content:space-between;margin-top:1.2rem}
+.an{max-width:520px;margin:3rem auto;text-align:center}.spin{width:92px;height:92px;margin:0 auto 1rem;border-radius:50%;border:6px solid var(--line);border-top-color:var(--a);border-right-color:var(--b);animation:rot 1.1s linear infinite}@keyframes rot{to{transform:rotate(360deg)}}
+.an ul{list-style:none;padding:0;text-align:left}.an li{padding:.55rem .9rem;margin:.4rem 0;border-radius:14px;color:var(--mut);opacity:.5;transition:.4s}.an li.on{opacity:1;color:var(--ink);background:var(--solid)}.an li.done{opacity:1}.an li.done::before{content:"✓ ";color:var(--c);font-weight:700}
+.res{text-align:center;padding:2rem 1rem}.big{font-size:clamp(4rem,16vw,7rem);margin:.2rem 0}.res .sub{margin:0 auto}
+.ring{width:150px;aspect-ratio:1;margin:1.3rem auto 0;border-radius:50%;background:conic-gradient(var(--a),var(--b) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;position:relative}.ring::before{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--solid)}.ring>div{position:relative;line-height:1.2}.ring b{font-size:1.9rem;display:block}
+.dim{text-align:left;cursor:pointer;font:inherit;color:inherit}.dim b{font:700 2.2rem Fraunces,Georgia,serif;display:block}.dim span{float:right;font-weight:700}.det{display:none;margin:.7rem 0 0;font-size:.9rem;color:var(--mut)}.dim.open .det{display:block}
+.row2{display:grid;grid-template-columns:8rem 1fr 3rem;gap:.8rem;align-items:center;width:100%;background:none;border:0;color:inherit;font:inherit;padding:.5rem 0;cursor:pointer;text-align:left}.row2 small{display:block;font-weight:400}
+.wl{list-style:none;padding:0}.wl li{display:flex;gap:.8rem;margin:.7rem 0}.wl b{flex:none;width:2rem;height:2rem;border-radius:50%;background:var(--g);color:#fff;display:grid;place-items:center}
+.tcard{text-align:left;cursor:pointer;font:inherit;color:inherit;border-top:6px solid var(--k);transition:transform .25s}.tcard:hover{transform:translateY(-4px)}.code{font:700 1.7rem Fraunces,Georgia,serif;color:var(--k)}.tcard p{margin:.3rem 0}
+.tags span{display:inline-block;margin:.2rem .2rem 0 0;padding:.15rem .6rem;border-radius:99px;background:var(--line);font-size:.78rem;font-weight:600}
+.modal{position:fixed;inset:0;z-index:20;background:rgba(20,15,40,.55);display:grid;place-items:center;padding:1rem;animation:rise .25s}.sheet{background:var(--solid);max-width:720px;max-height:88vh;overflow:auto}
+.pipe{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:1.2rem 0}.pipe .card{text-align:center;padding:1rem;position:relative;font-weight:600}.pipe .card:not(:last-child)::after{content:"→";position:absolute;right:-.9rem;top:50%;color:var(--a)}
+a{color:var(--a)}.chr{display:flex;flex-wrap:wrap;gap:.6rem;margin:.8rem 0}.chr span{padding:.45rem .9rem;border-radius:99px;background:var(--solid);border:1px solid var(--line);font-weight:600;font-size:.92rem}.chr small{font-weight:400;margin-left:.2rem}
+footer{max-width:640px;margin:0 auto;padding:1rem 1rem 2rem;font-size:.85rem;color:var(--mut);text-align:center}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.art{order:-1;max-width:240px}.pipe .card::after{display:none}.row2{grid-template-columns:6rem 1fr 3rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<header><button class="brand" data-a="go" data-v="home">🕵️ MBTI Detective <span class="gt">AI</span></button><button class="lnk" data-a="go" data-v="explore">Explore types</button><button class="lnk" data-a="go" data-v="about">About</button><button class="lnk" data-a="theme" aria-label="Toggle light or dark theme">🌓</button></header>
+<main id="app"></main>
+<footer>MBTI Detective AI provides an experimental personality estimate for entertainment and self-exploration. It is not a psychological diagnosis.</footer>
+<script>
+const $=s=>document.querySelector(s),app=$('#app'),esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+// Set to your FastAPI endpoint to use a trained model. Expected reply: {type, match, dims:[{l,pct}x4], top:[[type,pct]x3]}
+const API=null;
+const TY=Object.fromEntries(`INTJ|The Architect|Strategic planners who turn big ideas into working systems.|Strategic,Independent,Determined
+INTP|The Logician|Curious theorists who love taking ideas apart to see how they work.|Analytical,Inventive,Reserved
+ENTJ|The Commander|Decisive leaders who organize people and resources toward bold goals.|Confident,Driven,Efficient
+ENTP|The Debater|Quick-witted innovators who enjoy testing ideas from every angle.|Clever,Curious,Playful
+INFJ|The Advocate|Quiet idealists with deep insight and a drive to help others grow.|Insightful,Principled,Warm
+INFP|The Mediator|Gentle dreamers guided by strong values and a rich imagination.|Idealistic,Empathetic,Creative
+ENFJ|The Protagonist|Warm, charismatic mentors who bring out the best in people.|Charismatic,Supportive,Organized
+ENFP|The Campaigner|Enthusiastic explorers who connect people, ideas and possibilities.|Energetic,Imaginative,Sociable
+ISTJ|The Logistician|Reliable, thorough doers who value duty and clear standards.|Dependable,Methodical,Calm
+ISFJ|The Defender|Caring protectors who remember what matters to the people around them.|Loyal,Attentive,Gentle
+ESTJ|The Executive|Organized leaders who keep things structured and moving.|Practical,Decisive,Orderly
+ESFJ|The Consul|Sociable caretakers who build harmony and look after their circle.|Friendly,Generous,Cooperative
+ISTP|The Virtuoso|Calm hands-on problem solvers who learn by doing and tinkering.|Handy,Cool-headed,Adaptable
+ISFP|The Adventurer|Gentle, artistic souls who live in the moment and follow their senses.|Artistic,Easygoing,Sensitive
+ESTP|The Entrepreneur|Energetic, practical risk-takers who thrive in the moment.|Bold,Perceptive,Action-oriented
+ESFP|The Entertainer|Playful, spontaneous people who make life more vivid for everyone.|Fun-loving,Warm,Spontaneous`.split('\n').map(l=>{const[c,n,d,t]=l.split('|');return[c,{n,d,t:t.split(',')}]}));
+const GC={nt:'#8b7cf6',nf:'#f58fc2',sj:'#4fb6d9',sp:'#f5a742'},grp=c=>c[1]=='N'?(c[2]=='T'?'nt':'nf'):(c[3]=='J'?'sj':'sp');
+// [question, letterA, optionA, letterB, optionB]: dimensions are never shown to the user
+const Q=[['Imagine you arrive at a party where you barely know anyone. What would you probably do?','E','Start chatting with whoever is nearby','I','Stick to one or two people, or find a quiet corner'],
+['You get a brand-new gadget. What do you do first?','N','Play around and imagine everything it could do','S','Read the steps and try the basics'],
+['Your friend comes to you with a difficult personal problem. How would you react?','T','Help them break it down and find a solution','F','Listen closely and comfort them first'],
+['You suddenly have an entire free weekend. How would you spend it?','P','See what feels right in the moment','J','Plan it so I can enjoy every hour'],
+['After a long, tiring week, what recharges you most?','I','Quiet time at home','E','Seeing friends and going out'],
+['When you tell someone about your day, you usually share…','S','What happened, step by step','N','What it meant and the ideas it sparked'],
+['You have an important decision to make. What usually helps you decide?','F','My values and how it affects people','T','Logic, facts and pros and cons'],
+['Your plans for tomorrow suddenly change. How do you feel about it?','J','A bit annoyed. I like having a plan','P','Fine, maybe even excited'],
+['You have a great new idea. What do you do?','E','Tell people right away and bounce it around','I','Think it through on my own first'],
+['Which trip sounds more appealing?','N','An unknown place to wander and discover','S','A proven spot with clear things to do'],
+['A teammate keeps missing deadlines. What do you do?','F','Check in kindly and ask what is going on','T','Give clear, honest feedback'],
+['How does your desk or room usually look?','P','Creative chaos, but I know where things are','J','Tidy and organized'],
+['What do you trust more?','S','Methods that have been tested for years','N','My hunches about where things are heading'],
+['In a heated discussion, what matters most to you?','T','Getting to what is accurate and true','F','Keeping people respectful and feeling heard'],
+['A project is due in two weeks. How do you work?','J','Start early and pace myself','P','Work in bursts when the energy hits']];
+// Light keyword lexicon used to read free-text answers (the trained NLP model replaces this)
+const KW={E:/friend|people|talk|party|social|group|together/i,I:/alone|quiet|myself|home|space|reflect|solo|read/i,S:/fact|detail|practical|real|step|experience|hands|concrete/i,N:/idea|imagin|possib|future|creative|meaning|wonder|pattern|dream/i,T:/logic|analy|solve|fix|efficien|honest|reason|objective/i,F:/feel|empath|care|kind|support|listen|love|value|heart/i,J:/plan|schedul|organi|list|deadline|structur|early|prepare/i,P:/spontan|flexib|whatever|improv|last.?minute|explore|open|mood|go with/i};
+const DP=['EI','SN','TF','JP'],DN=['Energy','Information','Decisions','Lifestyle'];
+const PH={E:'draw energy from people and conversation',I:'recharge in quiet space and reflect before sharing',S:'trust concrete facts and real experience',N:'look for possibilities and the meaning beneath the surface',T:'lean on logic and clear reasoning',F:'weigh people’s feelings and values strongly',J:'prefer structure, plans and closure',P:'stay flexible and keep your options open'};
+const SEC=[['✨','Your strengths',{N:'You spot patterns and possibilities others overlook.',S:'You notice real details and turn ideas into practical results.',T:'Clear logic helps you cut through confusion.',F:'You sense what people need and make them feel understood.'}],
+['🧠','How you think',{N:'You think in big pictures, connections and “what ifs”.',S:'You trust concrete facts and lived experience.',J:'You like to reach a decision and move on.',P:'You keep options open until the last good moment.'}],
+['💬','How you communicate',{E:'You think out loud and warm up through conversation.',I:'You reflect first, then share carefully chosen thoughts.',T:'You are direct and value precise, honest feedback.',F:'You phrase things with care for how they will land.'}],
+['❤️','How you approach relationships',{F:'You offer deep empathy and loyalty to those you trust.',T:'You show care through practical help and honest advice.',J:'You value commitment and steady, dependable bonds.',P:'You keep relationships fresh, flexible and spontaneous.'}],
+['👥','How you behave in groups',{E:'Groups energize you, and you often bring people together.',I:'You shine in small circles and one-to-one talks.',J:'You tend to organize roles and keep things on track.',P:'You adapt easily and add a relaxed, playful spark.'}],
+['📚','How you tend to learn',{N:'You learn best through concepts, theories and exploring.',S:'You learn best through hands-on practice and examples.',E:'Discussion and teaching others help ideas stick.',I:'Quiet focus and time alone help ideas sink in.'}],
+['💼','Your ideal work environment',{J:'You thrive with clear goals, structure and deadlines.',P:'You thrive with freedom, variety and room to improvise.',T:'You enjoy solving problems and improving systems.',F:'You want meaningful work that helps people.'}],
+['⚡','Possible challenges',{P:'Deadlines and follow-through may need extra scaffolding.',J:'Sudden change can feel stressful, so flexibility is worth practicing.',F:'You may absorb others’ emotions or avoid conflict.',T:'You may overlook feelings when focused on solving.'}]];
+// Well-known characters that fans commonly type this way (fan opinions, not official)
+const CH=Object.fromEntries(`INTJ|Light Yagami (Death Note),Batman (DC Comics),Sherlock Holmes (Sherlock),Sasuke Uchiha (Naruto)
+INTP|L Lawliet (Death Note),Shikamaru Nara (Naruto),Spencer Reid (Criminal Minds),Bruce Banner (Marvel)
+ENTJ|Erwin Smith (Attack on Titan),Miranda Priestly (The Devil Wears Prada),Tywin Lannister (Game of Thrones),Azula (Avatar)
+ENTP|Tony Stark (Marvel),Jack Sparrow (Pirates of the Caribbean),Rick Sanchez (Rick and Morty),Satoru Gojo (Jujutsu Kaisen)
+INFJ|Itachi Uchiha (Naruto),Albus Dumbledore (Harry Potter),Atticus Finch (To Kill a Mockingbird),Elsa (Frozen)
+INFP|Luna Lovegood (Harry Potter),Frodo Baggins (The Lord of the Rings),Will Byers (Stranger Things),Belle (Beauty and the Beast)
+ENFJ|Leslie Knope (Parks and Recreation),Optimus Prime (Transformers),Professor X (X-Men),Katara (Avatar)
+ENFP|Jinx (Arcane),Naruto Uzumaki (Naruto),Anne Shirley (Anne of Green Gables),Nymphadora Tonks (Harry Potter)
+ISTJ|Ned Stark (Game of Thrones),Levi Ackerman (Attack on Titan),Spock (Star Trek)
+ISFJ|Samwise Gamgee (The Lord of the Rings),Pam Beesly (The Office),Hinata Hyuga (Naruto),Neville Longbottom (Harry Potter)
+ESTJ|Dwight Schrute (The Office),Monica Geller (Friends),Boromir (The Lord of the Rings)
+ESFJ|Molly Weasley (Harry Potter),Rachel Green (Friends),Tanjiro Kamado (Demon Slayer)
+ISTP|Mikasa Ackerman (Attack on Titan),Katniss Everdeen (The Hunger Games),Ron Swanson (Parks and Recreation),Wolverine (X-Men)
+ISFP|Link (The Legend of Zelda),Rapunzel (Tangled),Arthur Morgan (Red Dead Redemption 2),Zuko (Avatar)
+ESTP|Han Solo (Star Wars),Katsuki Bakugo (My Hero Academia),Dean Winchester (Supernatural),Maverick (Top Gun)
+ESFP|Joey Tribbiani (Friends),Phil Dunphy (Modern Family),Anna (Frozen),Elle Woods (Legally Blonde)`.split('\n').map(l=>l.split('|')));
+const chr=t=>`<div class="chr">${CH[t].split(',').map(n=>`<span>${n.replace(/ \((.+)\)$/,' <small>$1</small>')}</span>`).join('')}</div>`;
+const chars=t=>`<h2 class="sec">Characters who share your type</h2><div class="card"><p class="sub" style="margin-top:0">Fans often type these characters as ${t}.</p>${chr(t)}<p><small>Typings are fan opinions and often debated. <a href="https://www.personality-database.com/" target="_blank" rel="noopener">Browse more on Personality Database</a></small></p></div>`;
+const cn=c=>{const L=CH[c].split(',').map(n=>n.replace(/ \(.+\)$/,''));return L.slice(0,3).join(', ')+(L.length>3?` +${L.length-3} more`:'')};
+const prof=t=>SEC.map(([i,n,m])=>[i,n,Object.keys(m).filter(k=>t.includes(k)).map(k=>m[k]).join(' ')]);
+// Sample scorer: per-dimension evidence -> probability for all 16 types (sharpened). Swap for the ML model via API.
+function local(ans){
+ const c=Object.fromEntries([...'EISNTFJP'].map(l=>[l,0])),res=ans.map((a,i)=>{const q=Q[i];let L=a.pick;if(!L&&a.text){const x=KW[q[1]].test(a.text),y=KW[q[3]].test(a.text);if(x!=y)L=x?q[1]:q[3]}if(L)c[L]++;else{c[q[1]]+=.5;c[q[3]]+=.5}return L||null});
+ const P=DP.map(d=>(c[d[0]]+.5)/(c[d[0]]+c[d[1]]+1));
+ const dims=DP.map((d,i)=>({l:P[i]>=.5?d[0]:d[1],pct:Math.round(Math.max(P[i],1-P[i])*100)}));
+ let all=[];for(let m=0;m<16;m++){let t='',p=1;DP.forEach((d,i)=>{const f=m>>i&1;t+=d[f];p*=f?1-P[i]:P[i]});all.push([t,p*p])}
+ const s=all.reduce((a,b)=>a+b[1],0);all=all.map(([t,p])=>[t,p/s]).sort((a,b)=>b[1]-a[1]);
+ return{type:all[0][0],match:Math.round(all[0][1]*100),dims,top:all.slice(0,3).map(([t,p])=>[t,Math.round(p*100)]),res}}
+async function predict(ans){
+ if(API)try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({answers:ans.map((a,i)=>({question:Q[i][0],choice:a.pick?(a.pick==Q[i][1]?Q[i][2]:Q[i][4]):null,text:a.text||''}))})});if(r.ok)return await r.json()}catch(e){}
+ return local(ans)}
+function why(r){
+ const res=S.res,t2=r.top[1],weak=r.dims.reduce((a,b,i)=>b.pct<r.dims[a].pct?i:a,0),tx=S.ans.find(a=>a.text&&a.text.length>6);
+ const rows=r.dims.map(d=>{const ix=Q.map((q,i)=>q[1]==d.l||q[3]==d.l?i:-1).filter(i=>i>=0),k=ix.filter(i=>res[i]==d.l).length;return`<li><b>${d.l}</b><span>You seem to ${PH[d.l]}. ${k} of your ${ix.length} related answers pointed this way.</span></li>`}).join('');
+ return`<p>Our AI weighed every answer you gave. The closest match is <b>${r.type}</b>, and here is what stood out:</p><ul class="wl">${rows}</ul><p>${tx?`Your own words, “${esc(tx.text.slice(0,90))}”, were read alongside your choices. `:''}Your least clear-cut area was <b>${DN[weak].toLowerCase()}</b>, which is why <b>${t2[0]}</b> stays a close alternative.</p>`}
+const S={i:0,ans:[],v:'home'},V={};
+function go(v){S.v=v;app.innerHTML=`<div class="view">${V[v]()}</div>`;scrollTo({top:0});if(v=='quiz')sync();document.querySelectorAll('header .lnk[data-v]').forEach(b=>b.toggleAttribute('aria-current',b.dataset.v==v))}
+function sync(){const a=S.ans[S.i]||{};document.querySelectorAll('.opt').forEach(o=>{const on=o.dataset.v==a.pick;o.classList.toggle('on',on);o.setAttribute('aria-pressed',on)});const n=$('[data-a=next]');if(n)n.disabled=!(a.pick||(a.text||'').trim())}
+V.home=()=>`<section class="hero"><div><span class="pill">🔍 Your personal AI personality detective</span><h1>You don't know your MBTI? <span class="gt">Let AI discover it.</span></h1><p class="sub">Answer a few questions. Share your thoughts. Let our AI detective uncover your personality.</p><div class="row"><button class="btn" data-a="start">Discover My Personality</button><small>No MBTI knowledge required.</small></div></div>
+<div class="art"><svg viewBox="0 0 320 320" role="img" aria-label="Friendly detective with a magnifying glass"><defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b7cf6"/><stop offset="1" stop-color="#f58fc2"/></linearGradient></defs><circle cx="160" cy="160" r="144" fill="url(#g1)" opacity=".2"/><circle cx="160" cy="178" r="62" fill="#ffe0cf"/><ellipse cx="160" cy="130" rx="86" ry="15" fill="#4a3f7a"/><path d="M116 128c0-42 20-64 44-64s44 22 44 64z" fill="#5f509c"/><rect x="116" y="108" width="88" height="11" fill="#f58fc2"/><circle cx="140" cy="172" r="5" fill="#2a2540"/><circle cx="180" cy="172" r="5" fill="#2a2540"/><path d="M142 194q18 14 36 0" stroke="#2a2540" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="238" cy="208" r="40" fill="rgba(255,255,255,.55)" stroke="#8b7cf6" stroke-width="9"/><line x1="266" y1="237" x2="296" y2="272" stroke="#8b7cf6" stroke-width="13" stroke-linecap="round"/><text x="238" y="224" font-size="44" font-weight="700" text-anchor="middle" fill="#8b7cf6">?</text></svg>
+<span class="fl" style="top:6%;left:4%">✦</span><span class="fl" style="top:12%;right:2%;animation-delay:1s">🧩</span><span class="fl" style="bottom:6%;left:0;animation-delay:2s">💭</span></div></section>
+<h2 class="sec">How it works</h2><div class="grid">${[['01','Answer','Answer natural questions about everyday situations.'],['02','AI Analysis','Our AI analyzes your answers using natural language processing.'],['03','Discover','Receive your estimated MBTI type and a personalized personality profile.']].map(([n,t,d])=>`<div class="card step"><b class="gt">${n}</b><h3>${t}</h3><p>${d}</p></div>`).join('')}</div>`;
+V.quiz=()=>{const q=Q[S.i],a=S.ans[S.i]||{},last=S.i==Q.length-1;
+return`<div class="card quiz"><div class="prog"><span>Question ${S.i+1} / ${Q.length}</span><div class="bar"><i style="--w:${S.i/Q.length*100}%"></i></div></div><h2>${q[0]}</h2>${[[q[1],q[2]],[q[3],q[4]]].map(([l,t])=>`<button class="opt" data-a="pick" data-v="${l}">${t}</button>`).join('')}<p class="or"><small>Or answer in your own words (optional)</small></p><textarea id="tx" maxlength="280" aria-label="Your own answer" placeholder="Write a short answer…">${esc(a.text||'')}</textarea><div class="nav2"><button class="ghost" data-a="back" ${S.i?'':'disabled'}>← Back</button><button class="btn" data-a="next">${last?'Reveal my type ✨':'Next →'}</button></div></div>`};
+V.analyze=()=>`<div class="card an"><div class="spin"></div><h2 aria-live="polite">AI analyzing your personality…</h2><ul>${['Analyzing your answers…','Detecting personality patterns…','Comparing personality profiles…','Finding your closest MBTI type…'].map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+V.result=()=>{const r=S.r,t=TY[r.type];return`<section class="card res"><p class="sub">Your personality type is…</p><div class="big gt">${r.type}</div><h2>${t.n}</h2><p class="sub">${t.d}</p><div class="ring" style="--p:${r.match}"><div><b>${r.match}%</b><small>Estimated match</small></div></div></section>
+<h2 class="sec">Your four signals</h2><div class="grid">${r.dims.map((d,i)=>`<button class="card dim" data-a="tog" aria-expanded="false"><small>${DN[i]}</small><span>${d.pct}%</span><b>${d.l}</b><div class="bar"><i style="--w:${d.pct}%"></i></div><p class="det">You seem to ${PH[d.l]}. Tap again to close.</p></button>`).join('')}</div>
+<h2 class="sec">How sure is the AI?</h2><div class="card">${r.top.map(([c,p])=>`<button class="row2" data-a="open" data-v="${c}"><b>${c}<small>${TY[c].n}</small></b><div class="bar"><i style="--w:${p}%"></i></div><span>${p}%</span></button>`).join('')}<small>The AI shows its top three guesses, because no estimate is ever 100% certain.</small></div>
+<h2 class="sec">Why does our AI think you're an ${r.type}?</h2><div class="card">${why(r)}</div>
+${chars(r.type)}<h2 class="sec">Your personality profile</h2><div class="grid">${prof(r.type).map(([i,n,x])=>`<div class="card"><h3>${i} ${n}</h3><p>${x}</p></div>`).join('')}</div>
+<div class="row" style="justify-content:center;margin-top:2rem"><button class="btn" data-a="go" data-v="explore">Explore all 16 types</button><button class="ghost" data-a="start">Retake the test</button></div>`};
+V.explore=()=>`<h2 class="sec" style="margin-top:1rem">Explore the 16 types</h2><p class="sub">Tap a card to open the full profile.</p><div class="grid">${Object.entries(TY).map(([c,t])=>`<button class="card tcard" style="--k:${GC[grp(c)]}" data-a="open" data-v="${c}"><span class="code">${c}</span><h3>${t.n}</h3><p>${t.d}</p><div class="tags">${t.t.map(x=>`<span>${x}</span>`).join('')}</div><p style="margin:.7rem 0 0"><small>🎭 ${cn(c)}</small></p></button>`).join('')}</div>`;
+V.about=()=>`<h2 class="sec" style="margin-top:1rem">How does MBTI Detective AI work?</h2><p class="sub">Your answers travel through a simple pipeline, and every step is designed to be explainable.</p><div class="pipe">${['User answers','Natural Language Processing','Feature extraction','Machine Learning model','Personality classification','MBTI prediction'].map(t=>`<div class="card">${t}</div>`).join('')}</div>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))"><div class="card"><h3>Choosing the best model</h3><p>The system can train several classifiers (Logistic Regression, SVM, Random Forest and a Neural Network) on TF-IDF or embedding features, compare them with cross-validation, and keep the best performer as the live model.</p></div><div class="card"><h3>Transparent by design</h3><p>You always see the top three predicted types with their probabilities, not a single confident label. This live preview uses a built-in sample scorer in your browser, and a trained model plugs in through one predict() call.</p></div></div>`;
+const act={go:v=>go(v),start(){S.i=0;S.ans=[];go('quiz')},
+pick(v){S.ans[S.i]={...(S.ans[S.i]||{}),pick:v};sync()},
+back(){S.i--;go('quiz')},next(){S.i<Q.length-1?(S.i++,go('quiz')):analyze()},
+tog(v,b){const o=b.classList.toggle('open');b.setAttribute('aria-expanded',o)},
+open:v=>modal(v),
+close(v,b,e){if(e&&b.classList.contains('modal')&&e.target!==b)return;$('.modal')?.remove()},
+theme(){const r=document.documentElement,d=(r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))=='dark';r.dataset.theme=d?'light':'dark'}};
+async function analyze(){go('analyze');const L=[...app.querySelectorAll('li')];
+ try{const p=predict(S.ans);for(const li of L){li.className='on';await sleep(950);li.className='done'}S.r=await p;S.res=local(S.ans).res;go('result')}
+ catch(e){app.innerHTML='<div class="view card an"><h2>Something went wrong</h2><p>The analysis could not finish. Check your connection and try again.</p><button class="btn" data-a="next">Try again</button></div>'}}
+function modal(c){const t=TY[c],k=GC[grp(c)],m=document.createElement('div');m.className='modal';m.dataset.a='close';
+ m.innerHTML=`<div class="card sheet" role="dialog" aria-modal="true" aria-label="${t.n}"><button class="ghost" data-a="close" style="float:right" aria-label="Close">✕</button><div class="big" style="color:${k};font-size:3.4rem">${c}</div><h2>${t.n}</h2><p class="sub">${t.d}</p><div class="tags">${t.t.map(x=>`<span>${x}</span>`).join('')}</div><h3 style="margin:1.1rem 0 .2rem">🎭 Characters fans give this type</h3>${chr(c)}${prof(c).map(([i,n,x])=>`<h3 style="margin:1.1rem 0 .2rem">${i} ${n}</h3><p style="margin:0">${x}</p>`).join('')}</div>`;
+ document.body.append(m);m.querySelector('button').focus()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b)act[b.dataset.a]?.(b.dataset.v,b,e)});
+document.addEventListener('input',e=>{if(e.target.id=='tx'){(S.ans[S.i]=S.ans[S.i]||{}).text=e.target.value;sync()}});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')act.close()});
+go('home');
+</script></body></html>
